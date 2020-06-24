@@ -1,0 +1,17 @@
+import React from 'react';
+import logo from '../logo.svg';
+
+
+export default function NavBar () {
+  return (
+    <nav style = {{width:"auto" , height:60, background:"#fff", justifyItems:"center" , display: 'flex', alignItems: 'center' }}>
+      <img src={logo} className="App-logo" alt="logo" style = {{height:50, width:50}} />  
+      <a style={{margin:5}} href = "/">Home</a>
+      <a style={{margin:5}} href = "/Login">Login</a>
+      <a style={{margin:5}}>Contact</a>
+      <a style={{margin:5}}>About</a>
+
+    </nav>
+  );
+}
+
