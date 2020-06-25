@@ -11,6 +11,9 @@ export default function NavBar() {
         justifyItems: "center",
         display: "flex",
         alignItems: "center",
+        position :"fixed",
+        width :"100%",
+        marginBottom : 50
       }}
     >
       <img
