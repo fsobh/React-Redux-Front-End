@@ -3,11 +3,20 @@ import logo from "../logo.svg";
 import "../App.css";
 import animalHandler from "../AnimalHandler/AnimalHandler";
 import { connect } from "react-redux";
+import {fetchAnimals} from '../AnimalReducers/AnimalDataReducer'
 
 let Home = (props) => {
+
   useEffect(() => {
+
     animalHandler.getAllAnimals();
+  
   }, []);
+
+  // Empty --> update on initial render only
+  // no array --> updates o neverything
+
+
 
   console.log(props);
   return (
@@ -18,9 +27,9 @@ let Home = (props) => {
 };
 function mapStateToProps(state) {
   return {
-    animals: state.animals,
+    animals: state.animal.animals,
   };
 }
 
 export { Home };
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps, {fetchAnimals})(Home);
