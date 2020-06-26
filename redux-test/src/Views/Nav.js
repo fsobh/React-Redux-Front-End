@@ -5,15 +5,14 @@ export default function NavBar() {
   return (
     <nav
       style={{
-        width: "auto",
         height: 60,
         background: "#282c34",
         justifyItems: "center",
         display: "flex",
         alignItems: "center",
-        position :"fixed",
-        width :"100%",
-        marginBottom : 50
+        position: "fixed",
+        width: "100%",
+        marginBottom: 50,
       }}
     >
       <img
