@@ -7,12 +7,11 @@ export default function NavBar() {
       style={{
         height: 60,
         background: "#282c34",
-        justifyItems: "center",
+        top: 0,
         display: "flex",
         alignItems: "center",
         position: "fixed",
         width: "100%",
-        marginBottom: 50,
       }}
     >
       <img

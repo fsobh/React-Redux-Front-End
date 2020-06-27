@@ -11,19 +11,24 @@ const initStore = {
 export default function reducer(state = initStore, action) {
   let { type, payload } = action; //object destructuring
 
-  let animals = [];
-
   switch (type) {
     case "FETCH_ANIMALS":
       return {
         ...state,
-        animals: payload.animals,
+        animals: payload,
       };
 
     case "ADD_ANIMAL":
-      break;
+      return {
+        ...state,
+        animals: payload, //
+      };
+
     case "DELETE_ANIMAL":
-      break;
+      return {
+        ...state,
+        animals: payload, //
+      };
     default:
       return { ...state };
   }
@@ -33,6 +38,20 @@ export default function reducer(state = initStore, action) {
 export const fetchAnimals = (animals) => {
   return {
     type: "FETCH_ANIMALS",
+    payload: animals,
+  };
+};
+
+export const addAnimal = (animals) => {
+  return {
+    type: "ADD_ANIMALS",
+    payload: animals,
+  };
+};
+
+export const deleteAnimal = (animals) => {
+  return {
+    type: "DELETE_ANIMALS",
     payload: animals,
   };
 };
