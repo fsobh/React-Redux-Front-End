@@ -1,10 +1,4 @@
-import React, { useEffect } from "react";
-import logo from "../logo.svg";
-import "../App.css";
-import animalHandler from "../AnimalHandler/AnimalHandler";
-import { connect } from "react-redux";
-import { fetchAnimals, addAnimal } from "../AnimalReducers/AnimalDataReducer";
-
+//table, buttons , and icons
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -15,7 +9,7 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
-
+//dialog imports
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -23,7 +17,14 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-import Grid from "@material-ui/core/Grid";
+import React, { useEffect } from "react";
+import animalHandler from "../AnimalHandler/AnimalHandler";
+import { connect } from "react-redux";
+//import { fetchAnimals, addAnimal } from "../AnimalReducers/AnimalDataReducer";
+
+
+
+
 
 const useStyles = makeStyles({
   table: {
@@ -39,7 +40,7 @@ let Home = (props) => {
   // Empty --> update on initial render only
   // no array --> updates on neverything
 
-  //for using and closing the modal
+  //for using and closing the add animal modal
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -49,9 +50,26 @@ let Home = (props) => {
     setOpen(false);
   };
 
+  //Add animal dialog and input
   const [open, setOpen] = React.useState(false);
   const [name, setName] = React.useState("");
   const [type, setType] = React.useState("");
+//=========================================================================
+  //Edit animal and dialog
+  const [selectedAnimal, setSelectedAnimal] = React.useState(null)
+  const [editType, setEditTypeInput] = React.useState("")
+
+  const [openEditDialog, setOpenEditDialog] = React.useState(false);
+
+  const handleEditClickOpen = () => {
+    setOpenEditDialog(true);
+  };
+
+  const handleEditClose = (value) => {
+    setOpenEditDialog(false)
+    setSelectedAnimal(null)
+  };
+
 
   const classes = useStyles();
 
@@ -83,7 +101,7 @@ let Home = (props) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {props.animals.length != 0 ? (
+            {props.animals.length !== 0 ? (
               props.animals.map((row) => (
                 <TableRow key={row.id}>
                   <TableCell align="center">{row.name}</TableCell>
@@ -98,6 +116,11 @@ let Home = (props) => {
                       }}
                       variant="contained"
                       className={classes.button}
+                      onClick={() => {
+                        
+                        handleEditClickOpen()
+                        setSelectedAnimal(row.id)
+                      }}
                     >
                       Edit
                     </Button>
@@ -112,7 +135,7 @@ let Home = (props) => {
                       variant="contained"
                       color="secondary"
                       className={classes.button}
-                      onClick={() => {
+                      onClick={() => {                                    // -- HERE
                         animalHandler.delAnimal(row.id);
                         animalHandler.getAllAnimals();
                       }}
@@ -139,6 +162,7 @@ let Home = (props) => {
         </Button>
       </TableContainer>
 
+      {/**Dialog for Add new Animal */}
       <Dialog
         open={open}
         onClose={handleClose}
@@ -191,6 +215,51 @@ let Home = (props) => {
               setName("");
               setType("");
               console.log(props.animals.length);
+            }}
+            color="primary"
+          >
+            Submit
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/*Dialog for edit animal */}
+
+      <Dialog
+        open={openEditDialog}
+        onClose={handleEditClose}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">Edit Animal</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Fill in the corresponding input fields with the necessay data
+          </DialogContentText>
+          
+          <TextField
+            margin="dense"
+            id="typeEdit"
+            label="Animal Type"
+            type="name"
+            value={editType}
+            fullWidth
+            onChange={(e) => {
+              console.log(e.target.value);
+              setEditTypeInput(e.target.value);
+            }}
+            style={{ margin: 10 }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleEditClose} color="primary">
+            Cancel
+          </Button>
+          <Button
+            onClick={() => {
+              //edit here
+              animalHandler.edtAnimal(selectedAnimal,editType)               //here
+              animalHandler.getAllAnimals()
+              handleEditClose()
             }}
             color="primary"
           >

@@ -3,6 +3,7 @@ import {
   fetchAnimals,
   addAnimal,
   deleteAnimal,
+  editAnimal
 } from "../AnimalReducers/AnimalDataReducer";
 import store from "../Store";
 
@@ -39,7 +40,7 @@ const addNewAnimal = async (animal) => {
 const delAnimal = async (id) => {
   try {
     const data = await axios({
-      method: "GET",
+      method: "DELETE",
       url: `http://localhost:4000/api/v1/animals/deleteAnimal/${id}`,
     });
 
@@ -49,4 +50,21 @@ const delAnimal = async (id) => {
   }
 };
 
-export default { getAllAnimals, addNewAnimal, delAnimal };
+const edtAnimal = async (id, newType) => {
+  try {
+    const data = await axios({
+      method: "PUT",
+      url: `http://localhost:4000/api/v1/animals/changeAnimalDetails`,
+      data : {
+        id : id,
+        type : newType
+      }
+    });
+
+    store.dispatch(editAnimal(data.data)); // since this endpoint return the new list of animals after adding //
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export default { getAllAnimals, addNewAnimal, delAnimal, edtAnimal };

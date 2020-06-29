@@ -29,6 +29,12 @@ export default function reducer(state = initStore, action) {
         ...state,
         animals: payload, //
       };
+
+    case "EDIT_ANIMAL":
+       return {
+        ...state,
+        animals: payload, //
+      };  
     default:
       return { ...state };
   }
@@ -52,6 +58,13 @@ export const addAnimal = (animals) => {
 export const deleteAnimal = (animals) => {
   return {
     type: "DELETE_ANIMALS",
+    payload: animals,
+  };
+};
+
+export const editAnimal = (animals) => {
+  return {
+    type: "EDIT_ANIMALS",
     payload: animals,
   };
 };
